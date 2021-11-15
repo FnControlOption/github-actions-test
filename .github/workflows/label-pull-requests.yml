@@ -40,14 +40,60 @@ jobs:
             invalid:
               path: .+
 
+            workflows:
+              path: .github/workflows/.+
+
+            new formula:
+              status: added
+              path: Formula/.+
+
+            marked for removal/rejection:
+              status: removed
+              path: Formula/.+
+
             bottle unneeded:
               path: Formula/.+
               content: \n  (bottle :unneeded)\n
 
             no ARM bottle:
               path: Formula/.+
-              content: \n    sha256.* big_sur: +"[a-fA-F0-9]+"\n
-              missing_content: \n    sha256.* arm64_big_sur: +"[a-fA-F0-9]+"\n
+              content: '\n    sha256.* big_sur: +"[a-fA-F0-9]+"\n'
+              missing_content: '\n    sha256.* arm64_big_sur: +"[a-fA-F0-9]+"\n'
+
+            no Linux bottle:
+              path: Formula/.+
+              content: \n  bottle do\n
+              missing_content:
+                - \n    sha256.* x86_64_linux: +"[a-fA-F0-9]+"\n
+                - \n    sha256.* all: +"[a-fA-F0-9]+"\n
+                - depends_on :macos
+
+            formula deprecated:
+              path: Formula/.+
+              content: \n  deprecate!.*\n
+
+            formula disabled:
+              path: Formula/.+
+              content: \n  disable!.*\n
+
+            legacy:
+              path: Formula/.+@.+
+              except:
+                - Formula/openssl@1.1.rb
+                - Formula/openssl@3.0.rb
+                - Formula/python@3.9
+                - Formula/python-tk@3.9.rb
+
+            missing license:
+              missing_content: license "[^"]+"
+              path: Formula/.+
+
+            automerge-skip:
+              path: Formula/(patchelf|binutils).rb
+              keep_if_no_match: true
+
+            bump-formula-pr:
+              pr_body_content: Created with `brew bump-formula-pr`
 
       - name: Unlabel
         env:
