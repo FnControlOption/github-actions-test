@@ -12,6 +12,8 @@ async function main() {
         let constraints
         try {
             constraints = yaml.load(def)
+            console.log(constraints)
+            console.log()
         } catch {
             constraints = JSON.parse(def)
         }
