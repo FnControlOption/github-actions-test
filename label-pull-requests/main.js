@@ -12,11 +12,17 @@ async function main() {
         let constraints
         try {
             constraints = yaml.load(def)
+            console.log(constraints)
+            console.log()
         } catch (error) {
+            console.log(error)
+            console.log()
             constraints = JSON.parse(def)
         }
         if (!Array.isArray(constraints)) {
             constraints = Object.entries(constraints).map(([label, constraint]) => Object.assign({label}, constraint))
+            console.log(constraints)
+            console.log()
         }
 
         // Lint constraints
