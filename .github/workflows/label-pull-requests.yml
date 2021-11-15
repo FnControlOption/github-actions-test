@@ -85,11 +85,92 @@ jobs:
                 - Formula/python-tk@3.9.rb
 
             missing license:
-              missing_content: license "[^"]+"
               path: Formula/.+
+              missing_content: \n  license .+\n
 
-            automerge-skip:
-              path: Formula/(patchelf|binutils).rb
+            deprecated license:
+              path: Formula/.+
+              content: license .*"(GPL|LGPL|AGPL|GFDL)-[0-9].[0-9][+]?".*
+
+            go:
+              path: Formula/.+
+              content: depends_on "go(@[0-9.]+)?"
+
+            haskell:
+              path: Formula/.+
+              content: depends_on "(ghc|haskell-stack)(@[0-9.]+)?"
+
+            java:
+              path: Formula/.+
+              content: depends_on "openjdk(@[0-9.]+)?"
+
+            linux-only:
+              path: Formula/.+
+              content: depends_on :linux
+
+            macos-only:
+              path: Formula/.+
+              content: depends_on :macos
+
+            lua:
+              path: Formula/.+
+              content: depends_on "(lua|luajit|luajit-openresty)(@[0-9.]+)?"
+
+            nodejs:
+              path: Formula/.+
+              content: depends_on "node(@[0-9.]+)?"
+
+            ocaml:
+              path: Formula/.+
+              content: depends_on "ocaml(@[0-9.]+)?"
+
+            perl:
+              path: Formula/.+
+              content: (depends_on|uses_from_macos) "perl(@[0-9.]+)?"
+
+            php:
+              path: Formula/.+
+              content: (depends_on|uses_from_macos) "php(@[0-9.]+)?"
+
+            python:
+              path: Formula/.+
+              content: (depends_on|uses_from_macos) "python(@[0-9.]+)?"
+              missing_content: (depends_on|uses_from_macos) "python(@[0-9.]+)?" => \[?:(build|test)
+
+            ruby:
+              path: Formula/.+
+              content: (depends_on|uses_from_macos) "ruby(@[0-9.]+)?"
+
+            rust:
+              path: Formula/.+
+              content: depends_on "rust(@[0-9.]+)?"
+
+            dotnet:
+              path: Formula/.+
+              content: depends_on "dotnet(@[0-9.]+)?"
+
+            swift:
+              path: Formula/.+
+              content: system "swift", "build"
+
+            CI-long-timeout:
+              path: Formula/(boost|qt).rb
+              keep_if_no_match: true
+
+            CI-build-dependents-from-source:
+              path: Formula/(cabal-install|docbook-xsl|emscripten|erlang|ghc|go|ocaml|ocaml-findlib|ocaml-num|openjdk|rust).rb
+              keep_if_no_match: true
+
+            CI-skip-recursive-dependents:
+              path: Formula/(gettext|openssl).rb
+              keep_if_no_match: true
+
+            CI-linux-wheezy:
+              path: Formula/(zlib|binutils).rb
+              keep_if_no_match: true
+
+            CI-linux-self-hosted:
+              path: Formula/(gdbm|go|openssl@1.1|python@3.9|rust|sqlite).rb
               keep_if_no_match: true
 
             bump-formula-pr:
