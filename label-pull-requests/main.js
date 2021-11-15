@@ -12,7 +12,6 @@ async function main() {
         let constraints
         if (core.getBooleanInput("yaml")) {
             constraints = Object.entries(yaml.load(def)).map(([label, constraint]) => Object.assign({label}, constraint))
-            console.log(constraints)
         } else {
             constraints = JSON.parse(def)
         }
