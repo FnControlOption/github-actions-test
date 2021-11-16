@@ -234,8 +234,11 @@ function doesConstraintApply(constraint, file) {
     }
 
     if (constraint.content) {
-        console.log(JSON.stringify(file.content))
-        console.log(JSON.stringify(constraint.content))
+        if (file.content.includes("foobar") && constraint.content.includes("foobar")) {
+            console.log(JSON.stringify(file.content))
+            console.log(JSON.stringify(constraint.content))
+            console.log(file.content.match(constraint.content))
+        }
         if (Array.isArray(constraint.content)) {
             for (const content of constraint.content) {
                 if (!file.content.match(content)) {
