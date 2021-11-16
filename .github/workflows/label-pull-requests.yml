@@ -38,6 +38,7 @@ jobs:
           def: |
             - label: invalid
               path: .+
+              content: \nfoobar
 
             - label: workflows
               path: .github/workflows/.+
