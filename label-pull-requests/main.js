@@ -215,10 +215,6 @@ async function main() {
 }
 
 function doesConstraintApply(constraint, file) {
-    if (constraint.content) {
-        console.log(JSON.stringify(file.content))
-        console.log(JSON.stringify(constraint.content))
-    }
     if (constraint.status && file.status != constraint.status) {
         return false
     }
@@ -238,6 +234,8 @@ function doesConstraintApply(constraint, file) {
     }
 
     if (constraint.content) {
+        console.log(JSON.stringify(file.content))
+        console.log(JSON.stringify(constraint.content))
         if (Array.isArray(constraint.content)) {
             for (const content of constraint.content) {
                 if (!file.content.match(content)) {
