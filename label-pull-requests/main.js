@@ -12,8 +12,6 @@ async function main() {
         let constraints
         try {
             constraints = yaml.load(def)
-            console.log(constraints)
-            console.log()
         } catch {
             constraints = JSON.parse(def)
         }
@@ -217,6 +215,10 @@ async function main() {
 }
 
 function doesConstraintApply(constraint, file) {
+    if (constraint.content) {
+        console.log(JSON.stringify(file.content))
+        console.log(JSON.stringify(constraint.content))
+    }
     if (constraint.status && file.status != constraint.status) {
         return false
     }
