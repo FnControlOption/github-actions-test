@@ -9,4 +9,4 @@ jobs:
     steps:
       - run: brew developer on
       - run: brew update
-      - run: brew deps --graph --include-test --dot watchman
+      - run: brew deps --graph --include-build --include-test --dot watchman
