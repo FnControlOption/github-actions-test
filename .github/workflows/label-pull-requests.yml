@@ -7,5 +7,6 @@ jobs:
   label-pull-requests:
     runs-on: ubuntu-latest
     steps:
+      - run: brew developer on
       - run: brew update
       - run: brew deps --graph --include-test --dot watchman
