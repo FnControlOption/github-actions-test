@@ -1,6 +1,7 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
 const fs = require('fs')
+const yaml = require('js-yaml')
 
 async function main() {
     try {
@@ -8,7 +9,12 @@ async function main() {
         const def = core.getInput("def", { required: true })
 
         // Parse definition
-        const constraints = JSON.parse(def)
+        let constraints
+        try {
+            constraints = yaml.load(def)
+        } catch {
+            constraints = JSON.parse(def)
+        }
 
         // Lint constraints
         for (const constraint of constraints) {
@@ -228,6 +234,11 @@ function doesConstraintApply(constraint, file) {
     }
 
     if (constraint.content) {
+        if (file.content.includes("foobar") && constraint.content.includes("foobar")) {
+            console.log(JSON.stringify(file.content))
+            console.log(JSON.stringify(constraint.content))
+            console.log(file.content.match(constraint.content))
+        }
         if (Array.isArray(constraint.content)) {
             for (const content of constraint.content) {
                 if (!file.content.match(content)) {
